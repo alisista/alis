@@ -11,10 +11,10 @@
     "email": "ocrybit@gmail.com",
     "url": "https://alis.ocrybit.com/"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/alisista/alis.git"
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alisista/alis.git"
+  },
   "license": "MIT",
   "dependencies": {
     "amazon-cognito-identity-js": "^2.0.16",
