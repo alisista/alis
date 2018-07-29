@@ -1,0 +1,25 @@
+{
+  "name": "alis",
+  "version": "0.1.0",
+  "description": "ALIS API Node.js Client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "ocrybit",
+    "email": "ocrybit@gmail.com",
+    "url": "https://alis.ocrybit.com/"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/alisista/alis.git"
+  }
+  "license": "MIT",
+  "dependencies": {
+    "amazon-cognito-identity-js": "^2.0.16",
+    "node-fetch": "^2.2.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2"
+  }
+}
