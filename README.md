@@ -123,11 +123,11 @@ alis.me.info({/*cannot be omitted whe the 2nd argument exists*/}, {username: `yo
 ```
 2. directly pass `id_token` obtained by authentication (optionally with `username`)
 ```js
-alis.me.articles.article_id.like({},{id_token: `your_id_token`},(err, obj)=>{})
+alis.me.info({},{id_token: `your_id_token`},(err, obj)=>{})
 ```
 3. pass `refresh_token` and `username` (for some weired reasons)
 ```js
-alis.me.articles.article_id.like({},{refresh_token: `your_refresh_token`, username: `your_username`},(err, obj)=>{})
+alis.me.info({},{refresh_token: `your_refresh_token`, username: `your_username`},(err, obj)=>{})
 ```
 Note that it's a good idea to always pass your `username` since both authenticating and refreshing operations require `username` to be done automatically.
 
@@ -178,7 +178,7 @@ async function getWithPromise(){
         }
 	}})
 	// No need to specify the last callback function
-    // things go line by line from top to bottom with async/await and promise
+	// things go line by line from top to bottom with async/await and promise
 	console.log('This is the last line to be executed')
 }
 
@@ -201,10 +201,10 @@ const icon_base64 = fs.readFileSync(icon_path, 'base64')
 
 // don't forget the content-type, it's a required parameter
 alis.me.info.icon({icon: {icon_image: icon_base64}, "content-type": `image/jpeg`}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, json, obj)=>{
-	if(err == null){
-		// the newly uploaded image url will be returned
-    	console.log(json.icon_image_url)
-    }
+    if(err == null){
+	    // the newly uploaded image url will be returned
+		console.log(json.icon_image_url)
+	}
 })
 
 // Of course you have the simpler promise version too
