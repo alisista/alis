@@ -1,5 +1,5 @@
 const apis = require(`./lib/apis`)
-const Call = require(`./lib/Call`)
+let Call = require(`./lib/Call`)
 
 let AlisP = {}
 
