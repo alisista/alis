@@ -31,7 +31,7 @@ This time the example uses an `async/await` wrapper function to make it work lik
 
 ```js
 async function getAllMyArticlesTwoAtATime(){
-	// Amazon Cognito authentication is handled in the background
+    // Amazon Cognito authentication is handled in the background
     // the first argument for the API parameters to pass to the HTTPS request
     // the second argument for anything else specific to this library
 	await alis.p.me.articles.public({limit:2}, {username: `ocrybit`, password: `xxxxx`, getAllSync:(json, obj)=>{
