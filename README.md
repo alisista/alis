@@ -34,7 +34,7 @@ async function getAllMyArticlesTwoAtATime(){
     // Amazon Cognito authentication is handled in the background
     // the first argument for the API parameters to pass to the HTTPS request
     // the second argument for anything else specific to this library
-	await alis.p.me.articles.public({limit:2}, {username: `ocrybit`, password: `xxxxx`, getAllSync:(json, obj)=>{
+    await alis.p.me.articles.public({limit:2}, {username: `ocrybit`, password: `xxxxx`, getAllSync:(json, obj)=>{
     	/* obj contains some additional data for better paginating
            such as startNth, endNth, isNext, itemCount */
     	json.Items.forEach((article, index)=>{
@@ -113,7 +113,7 @@ Note that some `POST` and `PUT` API calls don't return anything back when succes
 
 ## Authentication
 
-ALIS uses [Amazon Cognito](https://aws.amazon.com/cognito/) to authenticate users but this library handles that in the background for you. You just need to pass your `username` and `password`, then it authenticates you through the complicated process and store the tokens in a temporary file, it automagically refreshes your tokens when they are expired.
+ALIS uses [Amazon Cognito](https://aws.amazon.com/cognito/) to authenticate users but this library handles that in the background for you. You just need to pass your `username` and `password`, then it authenticates you through the complicated process and stores the tokens in a temporary file, it automagically refreshes your tokens when they are expired.
 
 There are 3 ways to make API calls with authentication.
 
@@ -168,7 +168,7 @@ The promise based calls with `async/await` functions make it even simpler to fet
 
 ```js
 async function getWithPromise(){
-	let page = 0
+    let page = 0
     await alis.p.articles.popular({limit: 10},{getAllSync: (json, obj)=>{
         page += 1
         console.log(`${obj.itemCount} articles fetched from ${obj.startNth}th to ${obj.endNth}th.`)
@@ -179,7 +179,7 @@ async function getWithPromise(){
 	}})
 	// No need to specify the last callback function
 	// things go line by line from top to bottom with async/await and promise
-	console.log('This is the last line to be executed')
+	console.log(`This is the last line to be executed`)
 }
 
 getWithPromise()
@@ -202,13 +202,36 @@ const icon_base64 = fs.readFileSync(icon_path, 'base64')
 // don't forget the content-type, it's a required parameter
 alis.me.info.icon({icon: {icon_image: icon_base64}, "content-type": `image/jpeg`}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, json, obj)=>{
     if(err == null){
-	    // the newly uploaded image url will be returned
-		console.log(json.icon_image_url)
-	}
+        // the newly uploaded image url will be returned
+        console.log(json.icon_image_url)
+    }
 })
 
 // Of course you have the simpler promise version too
 // alis.p.me.info.icon(...)
+```
+To get all the articles and likes of an arbitrary user to calculate the total number of likes.
+
+```js
+const alis = require('alis')
+
+async function getTotalLikes(user_id){
+    let articles = []
+    await alis.p.users.user_id.articles.public({limit:100, user_id: user_id},{getAllSync:(json)=>{
+        articles = articles.concat(json.Items)
+    }})
+    console.log(`${articles.length} articles found.`);
+    let total_likes = 0
+    for(let article of articles){
+        let likes = await alis.p.articles.article_id.likes({article_id: article.article_id})
+        console.log(`[${likes.count}] ${article.title}`)
+        total_likes += likes.count
+    }
+    console.log(`${user_id} has earned ${total_likes} likes so far.`)
+}
+
+getTotalLikes(`user_id`)
+
 ```
 ---
 
