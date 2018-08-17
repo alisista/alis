@@ -119,7 +119,7 @@ There are 3 ways to make API calls with authentication.
 
 1. pass `username` and `password`
 ```js
-alis.me.info({/*cannot be omitted whe the 2nd argument exists*/}, {username: `your_username`, password: `your_password`},(err, obj)=>{})
+alis.me.info({/*cannot be omitted when the 2nd argument exists*/}, {username: `your_username`, password: `your_password`},(err, obj)=>{})
 ```
 2. directly pass `id_token` obtained by authentication (optionally with `username`)
 ```js
@@ -257,6 +257,6 @@ Tests are to be written soon.
 
 ## Contributors
 
-- [OK Rabitt (ocrybit)](https://github.com/ocrybit)
+- [OK Rabbit (@ocrybit)](https://github.com/ocrybit)
 
 
