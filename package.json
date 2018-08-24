@@ -15,6 +15,9 @@
     "type" : "git",
     "url" : "https://github.com/alisista/alis.git"
   },
+  "keywords": [
+    "ALIS"
+  ],
   "license": "MIT",
   "dependencies": {
     "amazon-cognito-identity-js": "^2.0.16",
