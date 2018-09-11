@@ -100,10 +100,17 @@ Some examples.
 ```js
 alis.articles.article_id((err, obj)=>{})
 ```
+
 [POST] /me/articles/{article_id}/like
 
 ```js
 alis.me.articles.article_id.like({article_id: `2xANm0jEzLPB`}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, obj)=>{})
+```
+
+[POST] /me/wallet/tip
+
+```js
+alis.me.wallet.tip({article_id: `2xANm0jEzLPB`, tip_value: 10000000000000000000}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, obj)=>{})
 ```
 
 Note that some `POST` and `PUT` API calls don't return anything back when successful, in that case this library returns `{statusCode: 200}` to indicate a successful operation.
