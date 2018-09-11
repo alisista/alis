@@ -240,6 +240,7 @@ To tip someone on an article.
 ```js
 const fs = require(`fs`)
 const alis = require('alis')
+
 // this is for 10 ALIS, so 1 ALIS = 1000000000000000000
 alis.me.wallet.tip({article_id: `2xANm0jEzLPB`, tip_value: 10000000000000000000}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, obj)=>{})
 ```
