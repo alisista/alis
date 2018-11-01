@@ -238,11 +238,18 @@ getTotalLikes(`user_id`)
 To tip someone on an article.
 
 ```js
-const fs = require(`fs`)
 const alis = require('alis')
 
 // this is for 10 ALIS, so 1 ALIS = 1000000000000000000
 alis.me.wallet.tip({article_id: `2xANm0jEzLPB`, tip_value: 10000000000000000000}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, obj)=>{})
+```
+
+To reply to a comment.
+
+```js
+const alis = require('alis')
+
+alis.me.articles.article_id.comments.reply({article_id: `3NjoGVvJV0o0`, comment:{text: `comment`, parent_id: `aplpm0g8Z9bP`, replyed_user_id: `yabaiwebyasan`}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, obj)=>{})
 ```
 
 ---
