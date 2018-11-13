@@ -252,6 +252,15 @@ const alis = require('alis')
 alis.me.articles.article_id.comments.reply({article_id: `3NjoGVvJV0o0`, comment:{text: `comment`, parent_id: `aplpm0g8Z9bP`, replyed_user_id: `yabaiwebyasan`}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, obj)=>{})
 ```
 
+To report a fraud.
+
+```js
+const alis = require('alis')
+
+// possible reasons: anything_contrary_to_public_order|nuisance|copyright_violation|slander|illegal_token_usage|illegal_act|other
+alis.me.articles.article_id.fraud({article_id: `2MqoAgmQnxEP`, reason:{free_text: `自作自演とディズニー素材の無断使用です。`, reason: `copyright_violation`}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, obj)=>{})
+```
+
 ---
 
 
