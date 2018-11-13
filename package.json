@@ -1,6 +1,6 @@
 {
   "name": "alis",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "ALIS API Node.js Client",
   "main": "index.js",
   "scripts": {
