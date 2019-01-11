@@ -262,6 +262,14 @@ const alis = require('alis')
 alis.me.articles.article_id.fraud({article_id: `2MqoAgmQnxEP`, reason:{free_text: `自作自演とディズニー素材の無断使用です。`, reason: `copyright_violation`, origin_url: `https://toystory.disney.com/`}}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, obj)=>{})
 ```
 
+To get recommended articles.
+
+```js
+const alis = require('alis')
+
+alis.articles.recommended({page: 3, limit: 10}, (err, obj)=>{})
+```
+
 ---
 
 
