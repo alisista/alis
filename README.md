@@ -272,73 +272,6 @@ alis.articles.recommended({page: 3, limit: 10}, (err, obj)=>{})
 
 ---
 
-## Oauth 2.0
-
-You can make a API call with OAuth 2.0 by simply adding `oauth` after `alis`. To authorize users, `access_token` is required in the second arguments. When refreshing the expired `access_token`, it uses `refresh_token` with `client_id` and `client_secret`; hence these parameters are required in the second arguments as well. Unlike the Cognito authorization `access_token` is not cached. You can update `access_token` by using `updated_access_token` in the returned object.
-
-Callback may look like:
-```js
-const alis = require('alis')
-
-options = {
-  access_token: "<ACCESS_TOKEN>",
-  refresh_token: "<REFRESH_TOKEN>",
-  client_id: "<CLIENT_ID_OF_YOUR_APP",
-  client_secret: "<CLIENT_SECRET_OF_YOUR_APP>",
-  scope: "read" // optional (read/write)
-}
-
-let page = 0
-alis.oauth.articles.popular({}, { ...options, getAll: (json, next, stop, obj) => {
-    page += 1
-    json.Items.forEach((article, index) => {
-        console.log(`${article.title}`)
-    })
-
-    // Update `access_token` in case it is refreshed
-    options.access_token = json.updated_access_token || options.access_token
-    if (page === 3) {
-        stop()
-    } else {
-        next()
-    }
-}}, (err, obj) => {
- console.log(`last callback`)
-})
-```
-
-Async/await call may look like:
-```js
-const alis = require('alis')
-
-options = {
-  access_token: "<ACCESS_TOKEN>",
-  refresh_token: "<REFRESH_TOKEN>",
-  client_id: "<CLIENT_ID_OF_YOUR_APP",
-  client_secret: "<CLIENT_SECRET_OF_YOUR_APP>",
-  scope: "read" // optional (read/write)
-}
-
-async function getTotalLikes(user_id){
-  let articles = []
-  await alis.oauth.p.users.user_id.articles.public({limit: 100, user_id: user_id}, {...options, getAllSync: (json) => {
-    articles = articles.concat(json.Items)
-    options.access_token = json.updated_access_token || options.access_token;
-  }})
-  console.log(`${articles.length} articles found.`);
-  let total_likes = 0
-  for(let article of articles) {
-    let likes = await alis.oauth.p.articles.article_id.likes({article_id: article.article_id}, {...options})
-    console.log(`[${likes.count}] ${article.title}`)
-    total_likes += likes.count
-  }
-  console.log(`${user_id} has earned ${total_likes} likes so far.`)
-}
-
-getTotalLikes(`user_id`)
-```
-
----
 
 ## Tests
 
@@ -351,9 +284,10 @@ Tests are to be written soon.
 ## Links
 
 - [ALIS API Documentation](https://alisproject.github.io/api-docs/)
-- [ALIS OAuth Documentation](https://alisproject.github.io/oauth2/)
 - [ALIS WebService](https://alis.to)
 - [ALIS Unofficial DISCORD Hacker Club](https://discordapp.com/invite/zKKNtUe)
+- [ALIS SEARCH](https://alisista.com)
+- [ALIS Articles Miner (ALIS過去記事マイナー)](https://alis.ocrybit.com)
 
 ---
 
@@ -361,5 +295,5 @@ Tests are to be written soon.
 ## Contributors
 
 - [OK Rabbit (@ocrybit)](https://github.com/ocrybit)
-- [hoosan(@hoosan16)](https://github.com/hoosan)
+
 
