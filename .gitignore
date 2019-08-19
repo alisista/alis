@@ -1,5 +1,8 @@
 # Alis API module
 .alis
+
+# VSCode
+.vscode
 	
 # Logs
 logs
