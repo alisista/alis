@@ -56,6 +56,7 @@ getAllMyArticlesTwoAtATime()
 - [Authentication](#authentication)
 - [Syntax Sugar](#syntax-sugar)
 - [More Examples](#more-examples)
+- [OAuth](#oauth)
 - [Tests](#tests)
 - [Links](#links)
 - [Contributors](#contributors)
@@ -274,9 +275,9 @@ alis.articles.recommended({page: 3, limit: 10}, (err, obj)=>{})
 
 ## Oauth 2.0
 
-You can make a API call with OAuth 2.0 by simply adding `oauth` after `alis`. To authorize users, `access_token` is required in the second arguments. When refreshing the expired `access_token`, it uses `refresh_token` with `client_id` and `client_secret`; hence these parameters are required in the second arguments as well. Unlike the Cognito authorization `access_token` is not cached. You can update `access_token` by using `updated_access_token` in the returned object.
+You can make a API call with OAuth 2.0 by simply adding `oauth` after `alis`. To authorize users, `access_token` is required in the second argument. When refreshing the expired `access_token`, it uses `refresh_token` with `client_id` and `client_secret`; hence these parameters are required in the second argument as well. Unlike the Cognito authorization `access_token` is not cached. You can update `access_token` by using `updated_access_token` in the returned object.
 
-Callback may look like:
+Call with a callback function may look like:
 ```js
 const alis = require('alis')
 
