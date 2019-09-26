@@ -1,6 +1,6 @@
 {
   "name": "alis",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "description": "ALIS API Node.js Client",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,10 @@
   "dependencies": {
     "amazon-cognito-identity-js": "^3.0.3",
     "node-fetch": "^2.2.0",
+    "ramda": "^0.26.1",
+    "ramda-adjunct": "^2.20.0",
+    "ramda-extension": "^0.10.0",
     "request": "^2.87.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.4"
   }
 }

@@ -1,58 +1,88 @@
+const R = require(`./lib/ramda`)
 const apis = require(`./lib/apis`)
-let Call = require(`./lib/Call`)
+const Call = require(`./lib/Call`)
 
-let AlisP = {}
-let AlisOauthP = {}
-let AlisOauth = {
-  p: AlisOauthP
-}
-let Alis = {
-  p: AlisP,
-  oauth: AlisOauth
-}
+const getFunc = R.ifElse(
+  R.propSatisfies(R.isTrue, `ispromise`),
+  R.always(Call.callP),
+  R.always(Call.call)
+)
 
-for(let k in apis){
-  let paths = k.split(`/`)
-  paths.shift()
+const applyArgs = v2 =>
+  R.compose(
+    R.apply(getFunc(v2)),
+    R.append(v2)
+  )
 
-  let cur = Alis
-  let curP = AlisP
-  let curOauth = AlisOauth
-  let curOauthP = AlisOauthP
+const makeFunc = path_name =>
+  R.compose(
+    v2 => R.unapply(applyArgs(v2)),
+    R.assoc(`path_name`, path_name)
+  )
 
-  while(paths.length > 0){
-    let next_path = paths.shift()
-    if(cur[next_path] == undefined){
-      cur[next_path] = {}
-      curP[next_path] = {}
-      curOauth[next_path] = {}
-      curOauthP[next_path] = {}
-    }
-    cur = cur[next_path]
-    curP = curP[next_path]
-    curOauth = curOauth[next_path]
-    curOauthP = curOauthP[next_path] 
-  }
-  let func = (...args) => {
-    args.push({path_name:k})
-    Call.call.apply(null, args)
-  }
-  let funcP = async (...args) => {
-    args.push({path_name: k, ispromise: true})
-    return await Call.callP.apply(null, args)
-  }
-  let funcOauth = (...args) => {
-    args.push({path_name: k, isOauth: true})
-    Call.call.apply(null, args)
-  }
-  let funcOauthP = async (...args) => {
-    args.push({path_name: k, ispromise: true, isOauth: true})
-    return await Call.callP.apply(null, args)
-  }
-  eval(`Alis.${k.split(`/`).slice(1).join(`.`)} = ` + func)
-  eval(`AlisP.${k.split(`/`).slice(1).join(`.`)} = ` + funcP)
-  eval(`AlisOauth.${k.split(`/`).slice(1).join(`.`)} = ` + funcOauth)
-  eval(`AlisOauthP.${k.split(`/`).slice(1).join(`.`)} = ` + funcOauthP)
-}
+const getFuncModels = path_name =>
+  R.map(makeFunc(path_name))({
+    alis: {},
+    "alis.p": { ispromise: true },
+    "alis.oauth": { isOauth: true },
+    "alis.oauth.p": { ispromise: true, isOauth: true }
+  })
 
-module.exports = Alis
+const rmAlis = R.compose(
+  R.sliceFrom(1),
+  R.split(`.`)
+)
+
+const getMethodPath = key =>
+  R.compose(
+    R.insertAll(0, rmAlis(key)),
+    R.sliceFrom(1),
+    R.split(`/`)
+  )
+
+const makeMethod = R.curry((path_name, obj) =>
+  R.compose(
+    R.values,
+    R.mapObjIndexed((func, key) =>
+      R.compose(
+        R.pair(R.__, func),
+        getMethodPath(key)
+      )(path_name)
+    )
+  )(obj)
+)
+
+const getMethodAssocComposition = R.chain(R.ap(makeMethod, getFuncModels))
+
+let alis = { p: {}, oauth: { p: {} } }
+
+const isLastElem = index =>
+  R.compose(
+    R.equals(index),
+    R.dec,
+    R.length,
+    R.prop(0)
+  )
+
+const assocMethods = R.forEach(path_func =>
+  R.addIndex(R.reduce)(
+    (obj, key, index) =>
+      R.when(
+        R.isNil,
+        () =>
+          (obj[key] = R.ifElse(isLastElem(index), R.prop(1), R.always({}))(
+            path_func
+          ))
+      )(obj[key]),
+    alis
+  )(path_func[0])
+)
+
+R.compose(
+  assocMethods,
+  getMethodAssocComposition,
+  R.sortBy(R.length),
+  R.keys
+)(apis)
+
+module.exports = alis
