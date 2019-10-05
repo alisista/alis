@@ -250,7 +250,7 @@ To get supporters on an article.
 ```js
 const alis = require('alis')
 
-alis.articles.article_id.suppoerters({article_id: `a1ZGnrwnvE41`}, (err, obj)=>{})
+alis.articles.article_id.supporters({article_id: `a1ZGnrwnvE41`}, (err, obj)=>{})
 ```
 
 To reply to a comment.
