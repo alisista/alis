@@ -245,6 +245,14 @@ const alis = require('alis')
 alis.me.wallet.tip({article_id: `2xANm0jEzLPB`, tip_value: 10000000000000000000}, {method: `POST`, username: `your_username`, password: `your_password`}, (err, obj)=>{})
 ```
 
+To get supporters on an article.
+
+```js
+const alis = require('alis')
+
+alis.articles.article_id.suppoerters({article_id: `a1ZGnrwnvE41`}, (err, obj)=>{})
+```
+
 To reply to a comment.
 
 ```js
