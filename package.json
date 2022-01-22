@@ -23,7 +23,7 @@
     "amazon-cognito-identity-js": "^3.0.3",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
-    "node-fetch": "^2.2.0",
+    "node-fetch": "^3.1.1",
     "ramda": "^0.26.1",
     "ramda-adjunct": "^2.20.0",
     "ramda-extension": "^0.10.0",
